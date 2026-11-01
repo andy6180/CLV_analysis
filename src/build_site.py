@@ -266,7 +266,7 @@ PAGES["data_company.html"] = ("企業簡介", f"""
       <tr><th>定位</th><td style="text-align:left;white-space:normal">SaaS 電商市集整合平台（本身並非電商）</td></tr>
       <tr><th>工作內容</th><td style="text-align:left;white-space:normal">協助中小型賣家（SMB）跨越技術、物流與通路門檻，順利在線上銷售</td></tr>
     </tbody></table></div>
-  <p>賣家「一次串接」即可上架至巴西各大主要市集：Amazon、Mercado Livre、B2W 等，並同時提供物流與金流整合服務，屬<span class="hl">市集型、非合約制（Non-contractual）</span>模式。</p>
+  <p>賣家「一次串接」即可上架至巴西各大主要市集：Mercado Livre、B2W、Via Varejo 等，並同時提供物流與金流整合服務，屬<span class="hl">市集型、非合約制（Non-contractual）</span>模式。</p>
 </div>
 <div class="card">
   <h2>為何適合研究？</h2>
@@ -308,7 +308,7 @@ PAGES["data_source.html"] = ("資料來源", f"""
 
 PAGES["data_process.html"] = ("資料前處理", f"""
 <h1 class="page-title">資料前處理</h1>
-<p class="page-lead">9 萬多筆原始資料分散在不同表格，充滿雜訊與格式問題。我們編寫程式進行清洗與串聯，這是萃取價值的關鍵第一步。</p>
+<p class="page-lead">9 萬多筆原始資料分散在訂單、付款與顧客三張表格，需要整併與篩選。我們編寫程式完成清洗與串聯，這是萃取價值的關鍵第一步。</p>
 <div class="card">
   <h2>處理流程</h2>
   <ol class="steps">
