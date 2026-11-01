@@ -496,16 +496,16 @@ PAGES["conclusion.html"] = ("結論與討論", f"""
 {pager(("分析結果", "results.html"), ("成果展示", "demo.html"))}
 """)
 
-btn = (f'<a class="btn" href="{STREAMLIT_URL}" target="_blank" rel="noopener">開啟 CLV 顧客價值分析系統 →</a>'
-       if STREAMLIT_URL else
-       '<a class="btn" aria-disabled="true">線上系統網址尚未設定</a>')
+# 有填 STREAMLIT_URL 才顯示「開啟系統」按鈕
+btn = (f'<p><a class="btn" href="{STREAMLIT_URL}" target="_blank" rel="noopener">開啟 CLV 顧客價值分析系統 →</a></p>'
+       if STREAMLIT_URL else '')
 
 PAGES["demo.html"] = ("成果展示", f"""
 <h1 class="page-title">成果展示</h1>
 <p class="page-lead">我們把整套流程做成 Streamlit 網頁系統。上傳符合格式的交易資料，系統會自動檢查資料、完成分群並預測未來 CLV。</p>
 <div class="card">
   <h2>CLV 顧客價值分析系統</h2>
-  <p>{btn}</p>
+  {btn}
   <h3>可以分析的資料</h3>
   <div class="tbl-wrap"><table class="text"><thead><tr><th>項目</th><th>條件</th></tr></thead>
     <tbody>
