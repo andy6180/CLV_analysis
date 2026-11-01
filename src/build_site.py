@@ -532,13 +532,6 @@ PAGES["demo.html"] = ("成果展示", f"""
   <figure class="card"><img src="img/demo_3_cluster.png" alt="系統畫面：肘部法則、PCA 與客群人數"><figcaption>步驟 3：分群結果。</figcaption></figure>
   <figure class="card"><img src="img/demo_4_clv.png" alt="系統畫面：未來 CLV 表與分客群圖"><figcaption>步驟 4：未來 CLV 預測結果。</figcaption></figure>
 </div>
-<div class="card">
-  <h2>在自己的電腦執行</h2>
-  <pre class="code">pip install -r requirements.txt
-streamlit run app.py</pre>
-  <p>程式碼：<a href="https://github.com/andy6180/CLV" target="_blank" rel="noopener">github.com/andy6180/CLV</a></p>
-  <p class="note">需要 Python 3.11。Olist 原始三張表可先用 <code>prepare_olist.py</code> 整理成一個交易檔再上傳。</p>
-</div>
 {pager(("結論與討論", "conclusion.html"), ("參考文獻", "references.html"))}
 """)
 
