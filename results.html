@@ -1,0 +1,177 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>分析結果｜CLV 專題</title><meta name="claude:viewport-fit-sides" content="cover"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;700;900&display=swap"><style>
+/* 版面：深藍頂部導覽 + 淺灰底的閱讀欄，內容區塊是白卡；格線角飾取自簡報 */
+:root{
+  --navy:#2c3e50; --navy-2:#34495e; --teal:#13a3b5; --teal-ink:#0e7c8a;
+  --ground:#ecf0f1; --paper:#ffffff; --ink:#22303d; --muted:#5d6b78; --line:#d3dce1;
+  --alert:#c0392b; --tint:#e3f3f5;
+  --f-display:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;
+  --f-body:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.85;letter-spacing:.02em}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+a{color:var(--teal-ink)}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+img{max-width:100%;height:auto;display:block}
+
+/* 導覽列 */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.nav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;font-size:1.15rem;letter-spacing:.08em;margin-right:auto}
+.brand-mark{width:30px;height:30px;flex:none;border:1.5px solid #fff;
+  background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:7.5px 7.5px;opacity:.9}
+.menu{display:flex;flex-wrap:wrap;gap:2px 4px;list-style:none;margin:0;padding:0;font-size:.98rem}
+.menu>li{position:relative}
+.menu a,.menu summary{display:block;color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.menu summary{list-style:none}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary::after{content:"";display:inline-block;margin-left:6px;vertical-align:3px;border:4px solid transparent;border-top-color:#fff;border-bottom:0}
+.menu a:hover,.menu summary:hover,.menu .on>a,.menu .on>details>summary{background:var(--navy-2)}
+.menu .on>a,.menu .on>details>summary{box-shadow:inset 0 -2px 0 var(--teal)}
+.drop{position:absolute;top:calc(100% + 6px);left:0;min-width:170px;background:var(--paper);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;list-style:none;margin:0;z-index:30}
+.drop a{color:var(--ink);padding:8px 12px}
+.drop a:hover,.drop a[aria-current]{background:var(--ground);color:var(--navy)}
+
+/* 主體 */
+main{max-width:1180px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+.hero{position:relative;padding-block:36px 8px;text-align:center}
+.hero::before,.hero::after{content:"";position:absolute;width:120px;height:120px;top:8px;opacity:.55;
+  background-image:linear-gradient(var(--navy) 1px,transparent 1px),linear-gradient(90deg,var(--navy) 1px,transparent 1px);background-size:15px 15px;border-right:1px solid var(--navy);border-bottom:1px solid var(--navy)}
+.hero::before{left:0}.hero::after{right:0}
+@media (max-width:720px){.hero::before,.hero::after{display:none}}
+.hero h1{position:relative;margin:0;font-family:var(--f-display);font-weight:900;font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.2;letter-spacing:.12em;text-wrap:balance;
+  background:linear-gradient(90deg,var(--navy) 0%,var(--teal) 50%,var(--navy) 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+@keyframes sheen{to{background-position:200% center}}
+.hero p{position:relative;margin:8px 0 0;font-weight:700;color:var(--navy);letter-spacing:.25em;font-size:clamp(.95rem,2.2vw,1.2rem)}
+.page-title{margin:0;font-family:var(--f-display);font-weight:900;color:var(--navy);font-size:clamp(1.9rem,4.5vw,2.7rem);letter-spacing:.1em;line-height:1.3;text-wrap:balance}
+.page-lead{margin:-12px 0 0;color:var(--muted)}
+
+.card{background:var(--paper);border-radius:12px;box-shadow:0 1px 3px rgba(44,62,80,.12);padding:28px clamp(18px,3.5vw,40px);min-width:0}
+.card h2{margin:0 0 14px;font-family:var(--f-display);font-size:1.45rem;color:var(--navy);letter-spacing:.08em;display:flex;align-items:center;gap:10px;text-wrap:balance}
+.card h2::before{content:"";width:14px;height:14px;flex:none;border:2px solid var(--teal);background-image:linear-gradient(var(--teal) 2px,transparent 2px),linear-gradient(90deg,var(--teal) 2px,transparent 2px);background-size:6px 6px}
+.card h3{margin:22px 0 8px;font-size:1.12rem;color:var(--navy)}
+.card p{margin:0 0 12px;max-width:68ch}
+.card p:last-child{margin-bottom:0}
+.hl{color:var(--teal-ink);font-weight:700}
+.warn{color:var(--alert);font-weight:700}
+.indent{text-indent:2em}
+
+.members{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:1.05rem}
+.members dt{color:var(--muted);white-space:nowrap}
+.members dd{margin:0;font-weight:700;color:var(--navy)}
+
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px;align-items:start}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px}
+.goal{border-top:3px solid var(--teal);padding-top:12px}
+.goal b{display:block;color:var(--navy);font-size:1.05rem;margin-bottom:4px}
+.goal span{color:var(--muted);font-size:.95rem}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px;margin:4px 0 0}
+.kv div{border-left:3px solid var(--teal);padding:2px 0 2px 12px}
+.kv b{display:block;font-family:var(--f-num);font-size:1.5rem;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.3}
+.kv span{color:var(--muted);font-size:.9rem}
+
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;margin-top:2px}
+
+.tbl-wrap{overflow-x:auto;margin:6px 0 14px}
+table{border-collapse:collapse;width:100%;font-size:.98rem;font-variant-numeric:tabular-nums;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:center;white-space:nowrap}
+thead th{background:var(--navy);color:#fff;font-weight:700}
+thead.teal th{background:var(--teal-ink)}
+tbody th{background:var(--ground);color:var(--navy)}
+tr.total td,tr.total th{font-weight:700;background:var(--tint)}
+td.num{font-family:var(--f-num)}
+table.text td{white-space:normal;text-align:left;min-width:9em}
+table.text th{white-space:nowrap}
+.note{color:var(--muted);font-size:.9rem}
+
+figure{margin:6px 0 0}
+figure img{border-radius:8px;border:1px solid var(--line);background:#fff}
+figcaption{color:var(--muted);font-size:.9rem;margin-top:6px}
+.formula{font-family:var(--f-display);font-weight:900;color:var(--navy);font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.1em;text-align:center;padding:18px 12px;border:2px solid var(--navy);border-radius:10px;background:var(--tint);margin:16px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;padding:0;list-style:none}
+.chips li{border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.92rem;background:var(--ground)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:0}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal-ink);color:#fff;text-decoration:none;font-weight:700;padding:10px 20px;border-radius:8px}
+.btn:hover{background:var(--navy)}
+.btn[aria-disabled]{background:var(--line);color:var(--muted);pointer-events:none}
+code,.code{font-family:var(--f-num);font-size:.9em;background:var(--ground);padding:1px 6px;border-radius:4px}
+pre.code{display:block;padding:12px 14px;overflow-x:auto;line-height:1.6;margin:8px 0 12px}
+
+.refs{display:grid;gap:10px}
+.refs details{background:var(--paper);border-radius:10px;box-shadow:0 1px 3px rgba(44,62,80,.12)}
+.refs summary{cursor:pointer;padding:14px 20px;font-weight:700;color:var(--navy);display:flex;gap:12px;align-items:baseline}
+.refs summary b{font-family:var(--f-num);color:var(--teal-ink)}
+.refs .body{padding:0 20px 16px 20px;color:var(--ink)}
+.refs .body p{margin:0 0 6px}
+
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{text-decoration:none;font-weight:700;color:var(--navy);background:var(--paper);padding:10px 16px;border-radius:8px;box-shadow:0 1px 3px rgba(44,62,80,.12)}
+.pager a:hover{color:var(--teal-ink)}
+
+footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;line-height:1.7;
+  padding-block:26px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#top{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:15;border:0;background:var(--navy);color:#fff;
+  width:46px;height:46px;border-radius:50%;font:700 .85rem var(--f-body);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#top:hover{background:var(--teal-ink)}
+@media (max-width:720px){body{font-size:16px}.menu{width:100%}.drop{position:static;box-shadow:none;background:var(--navy-2);margin-top:4px}.drop a{color:#fff}.drop a:hover,.drop a[aria-current]{background:var(--navy);color:#fff}}
+</style></head><body><header class="nav"><div class="nav-in"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>CLV 顧客終身價值</a><nav aria-label="主選單"><ul class="menu"><li><a href="index.html">首頁</a></li><li><details><summary>資料介紹</summary><ul class="drop"><li><a href="data_company.html">企業簡介</a></li><li><a href="data_source.html">資料來源</a></li><li><a href="data_process.html">資料前處理</a></li></ul></details></li><li><details><summary>方法介紹</summary><ul class="drop"><li><a href="method_rfm.html">RFM 與 K-Means</a></li><li><a href="method_cluster.html">肘部法則與 PCA</a></li><li><a href="method_clv.html">CLV 預測模型</a></li></ul></details></li><li class="on"><a href="results.html" aria-current="page">分析結果</a></li><li><a href="conclusion.html">結論與討論</a></li><li><a href="demo.html">成果展示</a></li><li><a href="references.html">參考文獻</a></li></ul></nav></div></header><main>
+<h1 class="page-title">分析結果</h1>
+<div class="card">
+  <h2>客戶價值人數與百分比</h2>
+  <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>百分比</th><th>平均 F（次）</th><th>平均 M（巴西幣）</th></tr></thead>
+    <tbody>
+      <tr><th>忠誠客戶</th><td class="num">2,775</td><td class="num">2.97%</td><td class="num">2.11</td><td class="num">292</td></tr>
+      <tr><th>VIP 客戶</th><td class="num">3,074</td><td class="num">3.29%</td><td class="num">1.01</td><td class="num">1,045</td></tr>
+      <tr><th>一般客戶</th><td class="num">87,508</td><td class="num">93.73%</td><td class="num">1.00</td><td class="num">130</td></tr>
+      <tr class="total"><th>全部顧客</th><td class="num">93,357</td><td class="num">100%</td><td></td><td></td></tr>
+    </tbody></table></div>
+  <p>K-Means 結果顯示，一般客戶占總客群約 <span class="hl">93.73%</span>，顯示大多數顧客消費次數與金額都不高；而 VIP 客戶與忠誠客戶合計僅占 <span class="hl">6.27%</span>。VIP 客戶平均消費約 1,045 巴西幣，但<span class="warn">平均只買過 1.01 次</span>。</p>
+</div>
+<div class="card">
+  <h2>未來 CLV 預測結果</h2>
+  <p class="note">總 CLV = BG/NBD 預期購買次數 × Gamma-Gamma 預期客單價（單位：巴西幣）</p>
+  <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>3 個月</th><th>6 個月</th><th>9 個月</th><th>12 個月</th></tr></thead>
+    <tbody>
+      <tr><th>忠誠客戶</th><td class="num">2,775</td><td class="num">8,917</td><td class="num">15,353</td><td class="num">20,364</td><td class="num">24,433</td></tr>
+      <tr><th>VIP 客戶</th><td class="num">3,074</td><td class="num">2,647</td><td class="num">4,619</td><td class="num">6,214</td><td class="num">7,561</td></tr>
+      <tr><th>一般客戶</th><td class="num">87,508</td><td class="num">70,264</td><td class="num">122,780</td><td class="num">165,422</td><td class="num">201,557</td></tr>
+      <tr class="total"><th>全部顧客</th><td class="num">93,357</td><td class="num">81,828</td><td class="num">142,752</td><td class="num">192,000</td><td class="num">233,551</td></tr>
+    </tbody></table></div>
+  <p>忠誠客戶人數只占約 3%，12 個月總 CLV 卻有 24,433；<span class="hl">每人約 8.80，是 VIP（每人約 2.46）的 3.6 倍</span>。</p>
+</div>
+<div class="card">
+  <h2>顧客未來 CLV 分客群</h2>
+  <div class="grid-2">
+    <figure><img src="img/clv_share.png" alt="各客群人數占比與 12 個月總 CLV 占比長條圖"><figcaption>各客群「人數占比」與「未來 12 個月總 CLV 占比」比較。</figcaption></figure>
+    <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數占比</th><th>CLV 占比</th><th>每人 12 個月 CLV</th></tr></thead>
+      <tbody>
+        <tr><th>忠誠客戶</th><td class="num">3.0%</td><td class="num"><span class="hl">10.5%</span></td><td class="num">8.80</td></tr>
+        <tr><th>VIP 客戶</th><td class="num">3.3%</td><td class="num"><span class="warn">3.2%</span></td><td class="num">2.46</td></tr>
+        <tr><th>一般客戶</th><td class="num">93.7%</td><td class="num">86.3%</td><td class="num">2.30</td></tr>
+      </tbody></table>
+      <p style="margin-top:14px"><b>忠誠客戶</b>的 CLV 占比是人數比例的 3 倍多。<b>VIP 客戶</b>過去花很多，但未來貢獻和人數比例差不多。<b>一般客戶</b>人數最多，是未來 CLV 的主要來源。</p>
+    </div>
+  </div>
+</div>
+<div class="pager"><a href="method_clv.html">← CLV 預測模型</a><a href="conclusion.html">結論與討論 →</a></div>
+</main><footer>© 2026 靜宜大學資料科學暨大數據分析與應用學系<br>CLV 顧客終身價值專題組｜資料來源：Kaggle Olist Brazilian E-commerce Dataset</footer><button id="top" type="button" aria-label="回到頁首">TOP</button>
+<script>
+(function(){
+  var ds=document.querySelectorAll('.menu details');
+  ds.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)ds.forEach(function(o){if(o!==d)o.open=false;});});});
+  document.addEventListener('click',function(e){ds.forEach(function(d){if(!d.contains(e.target))d.open=false;});});
+  var b=document.getElementById('top');
+  function f(){b.hidden=(document.documentElement.scrollTop||document.body.scrollTop)<300;}
+  window.addEventListener('scroll',f,{passive:true});f();
+  b.addEventListener('click',function(){window.scrollTo({top:0});});
+})();
+</script>
+</body></html>
