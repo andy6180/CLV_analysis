@@ -367,9 +367,9 @@ PAGES["method_rfm.html"] = ("RFM 與 K-Means", f"""
   <h3>客群命名規則</h3>
   <div class="tbl-wrap"><table><thead><tr><th>順序</th><th>客群</th><th>判定依據</th></tr></thead>
     <tbody>
-      <tr><td>1</td><th><span class="dot" style="background:#5b5bff"></span>忠誠客戶</th><td>Frequency 平均最高的一群</td></tr>
-      <tr><td>2</td><th><span class="dot" style="background:#ff6b6b"></span>VIP 客戶</th><td>其餘兩群中 Monetary 平均較高的一群</td></tr>
-      <tr><td>3</td><th><span class="dot" style="background:#9e9e9e"></span>一般客戶</th><td>剩下的一群（Frequency、Monetary 皆低）</td></tr>
+      <tr><td>1</td><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td>Frequency 平均最高的一群</td></tr>
+      <tr><td>2</td><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td>其餘兩群中 Monetary 平均較高的一群</td></tr>
+      <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td>剩下的一群（Frequency、Monetary 皆低）</td></tr>
     </tbody></table></div>
 </div>
 {pager(("資料前處理", "data_process.html"), ("肘部法則與 PCA", "method_cluster.html"))}
@@ -391,24 +391,22 @@ PAGES["method_cluster.html"] = ("肘部法則與 PCA", f"""
   </div>
 </div>
 <div class="card">
+  <h2>分群結果</h2>
+  <figure><img src="img/clusters.png" alt="K-Means 分群結果：橫軸購買次數、縱軸總消費金額，三群完全分開"><figcaption>每個點是一位顧客，畫在分群實際使用的購買次數（F）與總消費金額（M）上。</figcaption></figure>
+  <p style="margin-top:14px">分群只用 F 與 M，所以畫在這兩個指標上，三群可以完全分開：</p>
+  <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>實際範圍</th></tr></thead>
+    <tbody>
+      <tr><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td class="num">2,775</td><td style="text-align:left;white-space:normal">購買 2～15 次</td></tr>
+      <tr><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td class="num">3,074</td><td style="text-align:left;white-space:normal">多數只買 1 次，總消費 588～13,664 巴西幣（另有 26 人買過 2 次但金額很高）</td></tr>
+      <tr><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td class="num">87,508</td><td style="text-align:left;white-space:normal">只買 1 次，總消費 588 巴西幣以下</td></tr>
+    </tbody></table></div>
+  <p>一般客戶與 VIP 客戶的分界約為 <span class="hl">588 巴西幣</span>（圖中虛線）。這條線是 K-Means 依資料自己找出來的，不是事先設定。</p>
+</div>
+<div class="card">
   <h2>PCA（主成分分析）特徵對比</h2>
-  <div class="grid-2">
-    <figure><img src="img/pca.png" alt="PCA 散佈圖：三個客群沿 PC1 排開"><figcaption>PC1 主要反映 F、M；PC2 主要反映 R。</figcaption></figure>
-    <div>
-      <p>圖中每個點代表一位顧客，不同顏色代表不同客群。透過 PCA 將 RFM 三個特徵降到二維後，可以觀察各客群的分布情形。結果顯示，大部分顧客集中於左側區域，表示其消費行為較為相似；而少數顧客分布於右側與上方區域，顯示其消費特徵與一般顧客存在較大差異。</p>
-      <p>三群沿著 PC1（主要反映 F、M）由左到右排開，與分群只使用 F、M 的設計一致；同一群在 PC2（R）方向上分布很廣，代表同一群裡同時有最近才買與很久沒買的顧客。</p>
-    </div>
-  </div>
-  <div class="grid-2" style="margin-top:20px">
-    <figure><img src="img/pca_zoom.png" alt="PCA 散佈圖局部放大"><figcaption>左下密集區域放大（PC1：−2～12）。</figcaption></figure>
-    <div>
-      <ul class="chips" style="flex-direction:column;align-items:flex-start">
-        <li><span class="dot" style="background:#5b5bff"></span>藍色：忠誠客戶</li>
-        <li><span class="dot" style="background:#ff6b6b"></span>紅色：VIP 客戶</li>
-        <li><span class="dot" style="background:#9e9e9e"></span>灰色：一般客戶</li>
-      </ul>
-    </div>
-  </div>
+  <figure><img src="img/pca_facets.png" alt="PCA 分布，三個客群各一張，淺灰為全部顧客"><figcaption>三個客群分開呈現，淺灰色為全部顧客。PC1 主要反映 F、M；PC2 主要反映 R。</figcaption></figure>
+  <p style="margin-top:14px">透過 PCA 將 RFM 三個特徵降到二維後，可以觀察各客群的分布情形。結果顯示，大部分顧客集中於左側區域，表示其消費行為較為相似；而少數顧客分布於右側與上方區域，顯示其消費特徵與一般顧客存在較大差異。</p>
+  <p>三群沿著 PC1（主要反映 F、M）由左到右排開，與分群只使用 F、M 的設計一致；同一群在 PC2（R）方向上分布很廣，代表同一群裡同時有最近才買與很久沒買的顧客。</p>
 </div>
 {pager(("RFM 與 K-Means", "method_rfm.html"), ("CLV 預測模型", "method_clv.html"))}
 """)
@@ -522,7 +520,7 @@ PAGES["demo.html"] = ("成果展示", f"""
   <ol class="steps">
     <li><div><b>上傳資料並設定欄位</b><br>上傳 CSV 或 XLSX 檔，確認系統推薦的顧客 ID、訂單 ID、日期與金額欄位。</div></li>
     <li><div><b>資料品質檢查</b><br>系統依序檢查欄位缺失、訂單狀態、多筆付款與退貨，再確認資料量是否足夠。</div></li>
-    <li><div><b>分群結果</b><br>顯示肘部法則、PCA 與各客群人數。</div></li>
+    <li><div><b>分群結果</b><br>顯示肘部法則、分群散佈圖、PCA 與各客群人數。</div></li>
     <li><div><b>未來 CLV</b><br>顯示 3／6／9／12 個月的 CLV 表與各客群占比，可下載 CSV。</div></li>
   </ol>
 </div>
