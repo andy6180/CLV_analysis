@@ -546,7 +546,7 @@ PAGES["demo.html"] = ("成果展示", f"""
   <ol class="steps">
     <li><div><b>上傳資料並設定欄位</b><br>上傳 CSV 或 XLSX 檔，確認系統推薦的顧客 ID、訂單 ID、日期與金額欄位。</div></li>
     <li><div><b>資料品質檢查</b><br>系統依序檢查欄位缺失、訂單狀態、多筆付款與退貨，再確認資料量是否足夠。</div></li>
-    <li><div><b>分群結果</b><br>顯示肘部法則、分群散佈圖、PCA 與各客群人數。</div></li>
+    <li><div><b>分群結果</b><br>顯示肘部法則、分群散佈圖、PCA、VIP 客戶定義、與日常生活認知的比較及各客群人數。</div></li>
     <li><div><b>未來 CLV</b><br>顯示 3／6／9／12 個月的 CLV 表與各客群占比，可下載 CSV。</div></li>
   </ol>
 </div>
