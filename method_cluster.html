@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>肘部法則與 PCA｜CLV 專題</title><meta name="claude:viewport-fit-sides" content="cover"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;700;900&display=swap"><style>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>分群結果與 VIP 定義｜CLV 專題</title><meta name="claude:viewport-fit-sides" content="cover"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;700;900&display=swap"><style>
 /* 版面：深藍頂部導覽 + 淺灰底的閱讀欄，內容區塊是白卡；格線角飾取自簡報 */
 :root{
   --navy:#2c3e50; --navy-2:#34495e; --teal:#13a3b5; --teal-ink:#0e7c8a;
@@ -122,8 +122,8 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
   width:46px;height:46px;border-radius:50%;font:700 .85rem var(--f-body);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 #top:hover{background:var(--teal-ink)}
 @media (max-width:720px){body{font-size:16px}.menu{width:100%}.drop{position:static;box-shadow:none;background:var(--navy-2);margin-top:4px}.drop a{color:#fff}.drop a:hover,.drop a[aria-current]{background:var(--navy);color:#fff}}
-</style></head><body><header class="nav"><div class="nav-in"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>CLV 顧客終身價值</a><nav aria-label="主選單"><ul class="menu"><li><a href="index.html">首頁</a></li><li><details><summary>資料介紹</summary><ul class="drop"><li><a href="data_company.html">企業簡介</a></li><li><a href="data_source.html">資料來源</a></li><li><a href="data_process.html">資料前處理</a></li></ul></details></li><li class="on"><details><summary>方法介紹</summary><ul class="drop"><li><a href="method_rfm.html">RFM 與 K-Means</a></li><li><a href="method_cluster.html" aria-current="page">肘部法則與 PCA</a></li><li><a href="method_clv.html">CLV 預測模型</a></li></ul></details></li><li><a href="results.html">分析結果</a></li><li><a href="conclusion.html">結論與討論</a></li><li><a href="demo.html">成果展示</a></li><li><a href="references.html">參考文獻</a></li></ul></nav></div></header><main>
-<h1 class="page-title">肘部法則與 PCA</h1>
+</style></head><body><header class="nav"><div class="nav-in"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>CLV 顧客終身價值</a><nav aria-label="主選單"><ul class="menu"><li><a href="index.html">首頁</a></li><li><details><summary>資料介紹</summary><ul class="drop"><li><a href="data_company.html">企業簡介</a></li><li><a href="data_source.html">資料來源</a></li><li><a href="data_process.html">資料前處理</a></li></ul></details></li><li class="on"><details><summary>方法介紹</summary><ul class="drop"><li><a href="method_rfm.html">RFM 與 K-Means</a></li><li><a href="method_cluster.html" aria-current="page">分群結果與 VIP 定義</a></li><li><a href="method_clv.html">CLV 預測模型</a></li></ul></details></li><li><a href="results.html">分析結果</a></li><li><a href="conclusion.html">結論與討論</a></li><li><a href="demo.html">成果展示</a></li><li><a href="references.html">參考文獻</a></li></ul></nav></div></header><main>
+<h1 class="page-title">分群結果與 VIP 定義</h1>
 <div class="card">
   <h2>Elbow Method（肘部法則）</h2>
   <p>Elbow Method 是一種用來找出 K-Means 最佳分群數的方法。透過比較不同群數下的群內誤差（Inertia），觀察誤差下降的變化情形，並找出下降幅度開始變小的轉折點（肘部），作為最適合的分群數量。</p>
@@ -154,6 +154,32 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
   <figure><img src="img/pca_facets.png" alt="PCA 分布，三個客群各一張，淺灰為全部顧客"><figcaption>三個客群分開呈現，淺灰色為全部顧客。PC1 主要反映 F、M；PC2 主要反映 R。</figcaption></figure>
   <p style="margin-top:14px">透過 PCA 將 RFM 三個特徵降到二維後，可以觀察各客群的分布情形。結果顯示，大部分顧客集中於左側區域，表示其消費行為較為相似；而少數顧客分布於右側與上方區域，顯示其消費特徵與一般顧客存在較大差異。</p>
   <p>三群沿著 PC1（主要反映 F、M）由左到右排開，與分群只使用 F、M 的設計一致；同一群在 PC2（R）方向上分布很廣，代表同一群裡同時有最近才買與很久沒買的顧客。</p>
+</div>
+<div class="card">
+  <h2>VIP 客戶定義</h2>
+  <p>本研究的 VIP 客戶是指<span class="hl">累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
+  <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>內容</th></tr></thead>
+    <tbody>
+      <tr><th>定義</th><td style="text-align:left;white-space:normal">累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
+      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">扣除 Frequency 最高的忠誠客戶後，Monetary 平均較高的一群</td></tr>
+      <tr><th>金額門檻</th><td style="text-align:left;white-space:normal">總消費約 588 巴西幣以上（587.73～13,664.08），由 K-Means 依資料找出</td></tr>
+      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">3,048 人只買 1 次；26 人買 2 次（金額皆 ≥ 1,432）</td></tr>
+      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,074 人（3.29%）</td></tr>
+      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,045.14 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
+    </tbody></table></div>
+  <p>VIP 客戶幾乎都是<span class="hl">單筆高額訂單</span>的顧客：金額是區分 VIP 與一般客戶的唯一依據。</p>
+</div>
+<div class="card">
+  <h2>本分群與日常生活認知不同</h2>
+  <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>日常生活認知</th><th>本研究分群</th></tr></thead>
+    <tbody>
+      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只看消費金額，99% 只買過 1 次；12 個月每人 CLV 2.46，低於忠誠客戶 8.80</td></tr>
+      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上幾乎都屬之（2,801 人中 2,775 人），平均 2.11 次；平均消費 292.05，低於 VIP</td></tr>
+      <tr><th>一般客戶</th><td style="text-align:left;white-space:normal">人數不多的普通顧客</td><td style="text-align:left;white-space:normal">占 93.73%，人數最多</td></tr>
+      <tr><th>分群門檻</th><td style="text-align:left;white-space:normal">會員等級、事先訂定</td><td style="text-align:left;white-space:normal">K-Means 依資料找出（約 588），換資料就會改變</td></tr>
+      <tr><th>最近是否購買</th><td style="text-align:left;white-space:normal">通常會考慮</td><td style="text-align:left;white-space:normal">分群不使用 Recency</td></tr>
+    </tbody></table></div>
+  <p>原因：Olist 有 <span class="hl">97.0%</span> 顧客只買一次，顧客差異主要在金額，K-Means 因此以金額分出 VIP。要找未來最有價值的顧客，應看 <span class="hl">Future CLV</span>（見<a href="results.html">分析結果</a>），而非只看客群名稱。</p>
 </div>
 <div class="pager"><a href="method_rfm.html">← RFM 與 K-Means</a><a href="method_clv.html">CLV 預測模型 →</a></div>
 </main><footer>© 2026 靜宜大學資料科學暨大數據分析與應用學系<br>CLV 顧客終身價值專題組｜資料來源：Kaggle Olist Brazilian E-commerce Dataset</footer><button id="top" type="button" aria-label="回到頁首">TOP</button>

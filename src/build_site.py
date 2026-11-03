@@ -16,7 +16,7 @@ NAV = [
     ("首頁", "index.html", None),
     ("資料介紹", None, [("企業簡介", "data_company.html"), ("資料來源", "data_source.html"),
                         ("資料前處理", "data_process.html")]),
-    ("方法介紹", None, [("RFM 與 K-Means", "method_rfm.html"), ("肘部法則與 PCA", "method_cluster.html"),
+    ("方法介紹", None, [("RFM 與 K-Means", "method_rfm.html"), ("分群結果與 VIP 定義", "method_cluster.html"),
                         ("CLV 預測模型", "method_clv.html")]),
     ("分析結果", "results.html", None),
     ("結論與討論", "conclusion.html", None),
@@ -363,7 +363,7 @@ PAGES["method_rfm.html"] = ("RFM 與 K-Means", f"""
   <h2>分群方法：K-Means</h2>
   <p>K-Means 是一種常見的分群方法，會依照顧客消費行為的相似程度，自動將顧客分成不同群組。我們把 <span class="hl">Frequency（消費次數）與 Monetary（消費金額）</span>標準化後作為分群依據，將顧客分為 3 個客群，方便企業針對不同客戶制定行銷策略。</p>
   <h3>為什麼 Recency 不放進分群？</h3>
-  <p>如果把 R 也放進去，會出現「近期客戶」這種依時間命名的群。一位最近才買、而且買很多的顧客，就無法判斷該算近期客戶還是 VIP。因此分群只看 F 與 M，<span class="hl">每位顧客只會落在一群</span>；顧客會不會流失，交給有使用 Recency 的 BG/NBD 模型預測。</p>
+  <p>如果把 R 也放進去，會出現「近期客戶」這種依時間命名的群。一位最近才買、而且買很多的顧客，就無法判斷該算近期客戶還是 VIP。因此分群只看 F 與 M，<span class="hl">客群只由「買幾次、花多少」決定</span>；顧客會不會流失，交給有使用 Recency 的 BG/NBD 模型預測。</p>
   <h3>客群命名規則</h3>
   <div class="tbl-wrap"><table><thead><tr><th>順序</th><th>客群</th><th>判定依據</th></tr></thead>
     <tbody>
@@ -372,11 +372,11 @@ PAGES["method_rfm.html"] = ("RFM 與 K-Means", f"""
       <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td>剩下的一群（Frequency、Monetary 皆低）</td></tr>
     </tbody></table></div>
 </div>
-{pager(("資料前處理", "data_process.html"), ("肘部法則與 PCA", "method_cluster.html"))}
+{pager(("資料前處理", "data_process.html"), ("分群結果與 VIP 定義", "method_cluster.html"))}
 """)
 
-PAGES["method_cluster.html"] = ("肘部法則與 PCA", f"""
-<h1 class="page-title">肘部法則與 PCA</h1>
+PAGES["method_cluster.html"] = ("分群結果與 VIP 定義", f"""
+<h1 class="page-title">分群結果與 VIP 定義</h1>
 <div class="card">
   <h2>Elbow Method（肘部法則）</h2>
   <p>Elbow Method 是一種用來找出 K-Means 最佳分群數的方法。透過比較不同群數下的群內誤差（Inertia），觀察誤差下降的變化情形，並找出下降幅度開始變小的轉折點（肘部），作為最適合的分群數量。</p>
@@ -408,6 +408,32 @@ PAGES["method_cluster.html"] = ("肘部法則與 PCA", f"""
   <p style="margin-top:14px">透過 PCA 將 RFM 三個特徵降到二維後，可以觀察各客群的分布情形。結果顯示，大部分顧客集中於左側區域，表示其消費行為較為相似；而少數顧客分布於右側與上方區域，顯示其消費特徵與一般顧客存在較大差異。</p>
   <p>三群沿著 PC1（主要反映 F、M）由左到右排開，與分群只使用 F、M 的設計一致；同一群在 PC2（R）方向上分布很廣，代表同一群裡同時有最近才買與很久沒買的顧客。</p>
 </div>
+<div class="card">
+  <h2>VIP 客戶定義</h2>
+  <p>本研究的 VIP 客戶是指<span class="hl">累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
+  <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>內容</th></tr></thead>
+    <tbody>
+      <tr><th>定義</th><td style="text-align:left;white-space:normal">累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
+      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">扣除 Frequency 最高的忠誠客戶後，Monetary 平均較高的一群</td></tr>
+      <tr><th>金額門檻</th><td style="text-align:left;white-space:normal">總消費約 588 巴西幣以上（587.73～13,664.08），由 K-Means 依資料找出</td></tr>
+      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">3,048 人只買 1 次；26 人買 2 次（金額皆 ≥ 1,432）</td></tr>
+      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,074 人（3.29%）</td></tr>
+      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,045.14 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
+    </tbody></table></div>
+  <p>VIP 客戶幾乎都是<span class="hl">單筆高額訂單</span>的顧客：金額是區分 VIP 與一般客戶的唯一依據。</p>
+</div>
+<div class="card">
+  <h2>本分群與日常生活認知不同</h2>
+  <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>日常生活認知</th><th>本研究分群</th></tr></thead>
+    <tbody>
+      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只看消費金額，99% 只買過 1 次；12 個月每人 CLV 2.46，低於忠誠客戶 8.80</td></tr>
+      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上幾乎都屬之（2,801 人中 2,775 人），平均 2.11 次；平均消費 292.05，低於 VIP</td></tr>
+      <tr><th>一般客戶</th><td style="text-align:left;white-space:normal">人數不多的普通顧客</td><td style="text-align:left;white-space:normal">占 93.73%，人數最多</td></tr>
+      <tr><th>分群門檻</th><td style="text-align:left;white-space:normal">會員等級、事先訂定</td><td style="text-align:left;white-space:normal">K-Means 依資料找出（約 588），換資料就會改變</td></tr>
+      <tr><th>最近是否購買</th><td style="text-align:left;white-space:normal">通常會考慮</td><td style="text-align:left;white-space:normal">分群不使用 Recency</td></tr>
+    </tbody></table></div>
+  <p>原因：Olist 有 <span class="hl">97.0%</span> 顧客只買一次，顧客差異主要在金額，K-Means 因此以金額分出 VIP。要找未來最有價值的顧客，應看 <span class="hl">Future CLV</span>（見<a href="results.html">分析結果</a>），而非只看客群名稱。</p>
+</div>
 {pager(("RFM 與 K-Means", "method_rfm.html"), ("CLV 預測模型", "method_clv.html"))}
 """)
 
@@ -430,7 +456,7 @@ PAGES["method_clv.html"] = ("CLV 預測模型", f"""
   <p class="formula">未來 CLV ≈ 未來購買次數 × 每次平均消費金額</p>
   <p style="margin-top:16px">BG/NBD 給出未來 3、6、9、12 個月的預期購買次數，Gamma-Gamma 給出預期客單價，兩者相乘得到每位顧客的未來 CLV，再依客群加總。</p>
 </div>
-{pager(("肘部法則與 PCA", "method_cluster.html"), ("分析結果", "results.html"))}
+{pager(("分群結果與 VIP 定義", "method_cluster.html"), ("分析結果", "results.html"))}
 """)
 
 PAGES["results.html"] = ("分析結果", f"""
@@ -485,7 +511,7 @@ PAGES["conclusion.html"] = ("結論與討論", f"""
 <div class="card">
   <h2>討論</h2>
   <h3>一、分群數的選擇</h3>
-  <p>若把 Recency 一起放進分群，資料會被切成「有回購、近期一次購買、很久以前一次購買」，客群名稱會混用時間與金額兩種標準。本研究改用 F、M 分群，讓每位顧客只落在一群，肘部法則也在 3 群出現明顯轉折。</p>
+  <p>若把 Recency 一起放進分群，資料會被切成「有回購、近期一次購買、很久以前一次購買」，客群名稱會混用時間與金額兩種標準。本研究改用 F、M 分群，讓客群只由「買幾次、花多少」決定，肘部法則也在 3 群出現明顯轉折。</p>
   <h3>二、多數顧客只買一次</h3>
   <p>九成以上的顧客只有一筆訂單，模型能用來判斷顧客是否還會回來的資訊很少。這是 Olist 資料本身的特性，也是預測結果需要保守看待的原因。</p>
   <h3>三、尚未用實際資料驗證預測</h3>
