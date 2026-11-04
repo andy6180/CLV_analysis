@@ -1,3 +1,4 @@
+import re
 # -*- coding: utf-8 -*-
 """產生 CLV 專題網站（靜態多頁，可直接放 GitHub Pages）。
 
@@ -131,7 +132,11 @@ figcaption{color:var(--muted);font-size:.9rem;margin-top:6px}
 code,.code{font-family:var(--f-num);font-size:.9em;background:var(--ground);padding:1px 6px;border-radius:4px}
 pre.code{display:block;padding:12px 14px;overflow-x:auto;line-height:1.6;margin:8px 0 12px}
 
-.refs{display:grid;gap:10px}
+.refs h3{margin:0 0 12px;color:var(--navy)}
+.reflist{list-style:none;margin:0;padding:0}
+.reflist li{padding-left:2em;text-indent:-2em;margin:0 0 12px;line-height:1.75;overflow-wrap:anywhere}
+.reflist a{color:var(--teal-ink)}
+.refs{display:block}
 .refs details{background:var(--paper);border-radius:10px;box-shadow:0 1px 3px rgba(44,62,80,.12)}
 .refs summary{cursor:pointer;padding:14px 20px;font-weight:700;color:var(--navy);display:flex;gap:12px;align-items:baseline}
 .refs summary b{font-family:var(--f-num);color:var(--teal-ink)}
@@ -559,30 +564,31 @@ PAGES["demo.html"] = ("成果展示", f"""
 {pager(("結論與討論", "conclusion.html"), ("參考文獻", "references.html"))}
 """)
 
+# 參考文獻：格式依「資科系成果展－網頁製作 參考文獻格式」，與書面報告相同
+# __期刊名__ 會加底線；網址會轉成連結
 REFS = [
-    ("Olist Brazilian E-commerce Public Dataset", "Kaggle，Olist。本研究使用的訂單、付款與顧客資料表。",
-     "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"),
-    ("Olist 官方網站", "企業簡介資料來源。", "https://olist.com"),
-    ("Counting Your Customers the Easy Way: An Alternative to the Pareto/NBD Model",
-     "Fader, P. S., Hardie, B. G. S., & Lee, K. L. (2005). Marketing Science, 24(2), 275–284. BG/NBD 模型的原始論文。",
-     "http://www.brucehardie.com/papers/018/fader_et_al_mksc_05.pdf"),
-    ("The Gamma-Gamma Model of Monetary Value",
-     "Fader, P. S., & Hardie, B. G. S. (2013). Gamma-Gamma 消費金額模型說明。",
-     "http://www.brucehardie.com/notes/025/gamma_gamma.pdf"),
-    ("lifetimes 套件文件", "BG/NBD 與 Gamma-Gamma 模型的 Python 實作。", "https://lifetimes.readthedocs.io/en/latest/"),
-    ("scikit-learn：KMeans", "K-Means 分群與肘部法則使用的實作。",
-     "https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html"),
-    ("scikit-learn：PCA", "主成分分析使用的實作。",
-     "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"),
-    ("Streamlit", "成果展示系統使用的網頁框架。", "https://streamlit.io"),
+    "Davidson-Pilon, C. (n.d.). Lifetimes documentation. 2026 年 11 月 4 日，取自：https://lifetimes.readthedocs.io/en/latest/",
+    "Fader, P.S. & Hardie, B.G.S. (2013). The gamma-gamma model of monetary value. 2026 年 11 月 4 日，取自：http://www.brucehardie.com/notes/025/gamma_gamma.pdf",
+    "Fader, P.S. & Hardie, B.G.S. (2009). Probability models for customer-base analysis. __Journal of Interactive Marketing__, 23(1):61-69.",
+    "Fader, P.S., Hardie, B.G.S. & Lee, K.L. (2005a). “Counting your customers” the easy way: An alternative to the Pareto/NBD model. __Marketing Science__, 24(2):275-284.",
+    "Fader, P.S., Hardie, B.G.S. & Lee, K.L. (2005b). RFM and CLV: Using iso-value curves for customer base analysis. __Journal of Marketing Research__, 42(4):415-430.",
+    "Olist (n.d.-a). Brazilian e-commerce public dataset by Olist. Kaggle. 2026 年 11 月 4 日，取自：https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "Olist (n.d.-b). Olist. 2026 年 11 月 4 日，取自：https://olist.com",
+    "Pedregosa, F. et al. (2011). Scikit-learn: Machine learning in Python. __Journal of Machine Learning Research__, 12:2825-2830.",
+    "Streamlit (n.d.). Streamlit documentation. 2026 年 11 月 4 日，取自：https://docs.streamlit.io/",
 ]
-ref_html = "".join(
-    f'<details><summary><b>{i:02d}</b>{t}</summary><div class="body"><p>{d}</p>'
-    f'<p><a href="{u}" target="_blank" rel="noopener">{u}</a></p></div></details>'
-    for i, (t, d, u) in enumerate(REFS, 1))
+
+
+def ref_item(r):
+    h = re.sub(r"__(.+?)__", r"<u>\1</u>", r.replace("&", "&amp;"))
+    h = re.sub(r"(https?://\S+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', h)
+    return f"<li>{h}</li>"
+
+
+ref_html = '<h3>一、英文文獻：</h3><ol class="reflist">' + "".join(ref_item(r) for r in REFS) + "</ol>"
 PAGES["references.html"] = ("參考文獻", f"""
 <h1 class="page-title">參考文獻</h1>
-<div class="refs">{ref_html}</div>
+<div class="card refs">{ref_html}</div>
 {pager(("成果展示", "demo.html"), ("首頁", "index.html"))}
 """)
 
