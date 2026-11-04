@@ -146,10 +146,11 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
   <h3>客群命名規則</h3>
   <div class="tbl-wrap"><table><thead><tr><th>順序</th><th>客群</th><th>判定依據</th></tr></thead>
     <tbody>
-      <tr><td>1</td><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td>Frequency 平均最高的一群</td></tr>
-      <tr><td>2</td><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td>其餘兩群中 Monetary 平均較高的一群</td></tr>
-      <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td>剩下的一群（Frequency、Monetary 皆低）</td></tr>
+      <tr><td>1</td><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td style="text-align:left;white-space:normal">購買 2 次以上（有回購）</td></tr>
+      <tr><td>2</td><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td style="text-align:left;white-space:normal">只買 1 次，總消費在 K-Means 分界（約 588 巴西幣）以上</td></tr>
+      <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td style="text-align:left;white-space:normal">只買 1 次，總消費在分界以下</td></tr>
     </tbody></table></div>
+  <p>K-Means 先依 F、M 分成三群：購買次數平均最高的一群為忠誠客戶，其餘兩群中消費金額平均較高的為 VIP 客戶，剩下的為一般客戶。K-Means 已把 2,801 位回購顧客中的 2,775 位分在同一群；另外 26 位買 2 次且金額很高的顧客會被分到 VIP。為了讓每個客群都能用一句話定義，本研究再規定<span class="hl">買 2 次以上一律為忠誠客戶</span>，K-Means 則負責找出 VIP 與一般客戶之間的金額分界。</p>
 </div>
 <div class="pager"><a href="data_process.html">← 資料前處理</a><a href="method_cluster.html">分群結果與 VIP 定義 →</a></div>
 </main><footer>© 2026 靜宜大學資料科學暨大數據分析與應用學系<br>CLV 顧客終身價值專題組｜資料來源：Kaggle Olist Brazilian E-commerce Dataset</footer><button id="top" type="button" aria-label="回到頁首">TOP</button>

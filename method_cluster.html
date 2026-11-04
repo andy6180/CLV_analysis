@@ -147,11 +147,11 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
   <p style="margin-top:14px">分群只用 F 與 M，所以畫在這兩個指標上，三群可以完全分開：</p>
   <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>實際範圍</th></tr></thead>
     <tbody>
-      <tr><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td class="num">2,775</td><td style="text-align:left;white-space:normal">購買 2～15 次</td></tr>
-      <tr><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td class="num">3,074</td><td style="text-align:left;white-space:normal">多數只買 1 次，總消費 588～13,664 巴西幣（另有 26 人買過 2 次但金額很高）</td></tr>
+      <tr><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td class="num">2,801</td><td style="text-align:left;white-space:normal">購買 2～15 次（有回購）</td></tr>
+      <tr><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td class="num">3,048</td><td style="text-align:left;white-space:normal">只買 1 次，總消費 588～13,664 巴西幣</td></tr>
       <tr><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td class="num">87,508</td><td style="text-align:left;white-space:normal">只買 1 次，總消費 588 巴西幣以下</td></tr>
     </tbody></table></div>
-  <p>一般客戶與 VIP 客戶的分界約為 <span class="hl">588 巴西幣</span>（圖中虛線）。這條線是 K-Means 依資料自己找出來的，不是事先設定。</p>
+  <p>一般客戶與 VIP 客戶的分界約為 <span class="hl">588 巴西幣</span>（圖中虛線），也就是 K-Means 一般客戶群中心（平均 130 巴西幣）與 VIP 群中心（套用回購規則前，平均 1,045 巴西幣）的正中間。這條線是 K-Means 依資料找出來的，不是事先設定。</p>
 </div>
 <div class="card">
   <h2>PCA（主成分分析）特徵對比</h2>
@@ -161,24 +161,24 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
 </div>
 <div class="card">
   <h2>VIP 客戶定義</h2>
-  <p>本研究的 VIP 客戶是指<span class="hl">累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
+  <p>本研究的 VIP 客戶是指<span class="hl">只買過 1 次、但累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
   <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>內容</th></tr></thead>
     <tbody>
-      <tr><th>定義</th><td style="text-align:left;white-space:normal">累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
-      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">扣除 Frequency 最高的忠誠客戶後，Monetary 平均較高的一群</td></tr>
+      <tr><th>定義</th><td style="text-align:left;white-space:normal">只買過 1 次、但累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
+      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">只買 1 次的顧客中，消費金額在 K-Means 分界以上者；買 2 次以上一律為忠誠客戶</td></tr>
       <tr><th>金額門檻</th><td style="text-align:left;white-space:normal">總消費約 588 巴西幣以上（587.73～13,664.08），由 K-Means 依資料找出</td></tr>
-      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">3,048 人只買 1 次；26 人買 2 次（金額皆 ≥ 1,432）</td></tr>
-      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,074 人（3.29%）</td></tr>
-      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,045.14 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
+      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">全部只買 1 次</td></tr>
+      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,048 人（3.26%）</td></tr>
+      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,036.37 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
     </tbody></table></div>
-  <p>VIP 客戶幾乎都是<span class="hl">單筆高額訂單</span>的顧客：金額是區分 VIP 與一般客戶的唯一依據。</p>
+  <p>VIP 客戶都是<span class="hl">只買過一次、消費金額高</span>的顧客：只買 1 次的顧客中，金額是區分 VIP 與一般客戶的唯一依據。</p>
 </div>
 <div class="card">
   <h2>本分群與日常生活認知不同</h2>
   <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>日常生活認知</th><th>本研究分群</th></tr></thead>
     <tbody>
-      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只看消費金額，99% 只買過 1 次；12 個月每人 CLV 2.46，低於忠誠客戶 8.80</td></tr>
-      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上幾乎都屬之（2,801 人中 2,775 人），平均 2.11 次；平均消費 292.05，低於 VIP</td></tr>
+      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只買過 1 次、消費金額高；12 個月每人 CLV 2.26，低於忠誠客戶 8.96</td></tr>
+      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上即屬之，平均 2.11 次；平均消費 308.59，低於 VIP</td></tr>
       <tr><th>一般客戶</th><td style="text-align:left;white-space:normal">人數不多的普通顧客</td><td style="text-align:left;white-space:normal">占 93.73%，人數最多</td></tr>
       <tr><th>分群門檻</th><td style="text-align:left;white-space:normal">會員等級、事先訂定</td><td style="text-align:left;white-space:normal">K-Means 依資料找出（約 588），換資料就會改變</td></tr>
       <tr><th>最近是否購買</th><td style="text-align:left;white-space:normal">通常會考慮</td><td style="text-align:left;white-space:normal">分群不使用 Recency</td></tr>

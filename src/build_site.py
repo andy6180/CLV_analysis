@@ -237,7 +237,7 @@ PAGES["index.html"] = (None, f"""
 <div class="card">
   <h2>摘要</h2>
   <p class="indent">本研究以巴西電商 Olist 公開資料集為基礎，將訂單、付款與顧客三張資料表清洗整併後，為 <span class="hl">93,357 位顧客</span>建立 RFM 指標（最近一次消費、消費次數、消費金額）。接著以 Frequency 與 Monetary 進行 K-Means 分群，將顧客分為<span class="hl">忠誠客戶、VIP 客戶與一般客戶</span>三群，並以 BG/NBD 預測顧客未來的購買次數、以 Gamma-Gamma 預測每次消費金額，兩者相乘得到未來 3、6、9、12 個月的 CLV。</p>
-  <p class="indent">結果顯示，VIP 客戶過去平均消費約 1,045 巴西幣，但平均只買過 1.01 次，未來 12 個月每人 CLV 約 2.46；忠誠客戶人數只占約 3%，每人 CLV 卻約 8.80，是 VIP 的 3.6 倍。<span class="hl">若只看過去的消費金額，會高估 VIP 的未來價值</span>。最後我們把整套流程做成 Streamlit 網頁系統，只要上傳符合格式的交易資料，就能重跑分群與 CLV 預測。</p>
+  <p class="indent">結果顯示，VIP 客戶過去平均消費約 1,036 巴西幣，但都只買過 1 次，未來 12 個月每人 CLV 約 2.26，略低於一般客戶的 2.30；忠誠客戶人數只占約 3%，每人 CLV 卻約 8.96，是 VIP 的 4.0 倍。<span class="hl">若只看過去的消費金額，會高估 VIP 的未來價值</span>。最後我們把整套流程做成 Streamlit 網頁系統，只要上傳符合格式的交易資料，就能重跑分群與 CLV 預測。</p>
 </div>
 
 <div class="card">
@@ -372,10 +372,11 @@ PAGES["method_rfm.html"] = ("RFM 與 K-Means", f"""
   <h3>客群命名規則</h3>
   <div class="tbl-wrap"><table><thead><tr><th>順序</th><th>客群</th><th>判定依據</th></tr></thead>
     <tbody>
-      <tr><td>1</td><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td>Frequency 平均最高的一群</td></tr>
-      <tr><td>2</td><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td>其餘兩群中 Monetary 平均較高的一群</td></tr>
-      <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td>剩下的一群（Frequency、Monetary 皆低）</td></tr>
+      <tr><td>1</td><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td style="text-align:left;white-space:normal">購買 2 次以上（有回購）</td></tr>
+      <tr><td>2</td><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td style="text-align:left;white-space:normal">只買 1 次，總消費在 K-Means 分界（約 588 巴西幣）以上</td></tr>
+      <tr><td>3</td><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td style="text-align:left;white-space:normal">只買 1 次，總消費在分界以下</td></tr>
     </tbody></table></div>
+  <p>K-Means 先依 F、M 分成三群：購買次數平均最高的一群為忠誠客戶，其餘兩群中消費金額平均較高的為 VIP 客戶，剩下的為一般客戶。K-Means 已把 2,801 位回購顧客中的 2,775 位分在同一群；另外 26 位買 2 次且金額很高的顧客會被分到 VIP。為了讓每個客群都能用一句話定義，本研究再規定<span class="hl">買 2 次以上一律為忠誠客戶</span>，K-Means 則負責找出 VIP 與一般客戶之間的金額分界。</p>
 </div>
 {pager(("資料前處理", "data_process.html"), ("分群結果與 VIP 定義", "method_cluster.html"))}
 """)
@@ -401,11 +402,11 @@ PAGES["method_cluster.html"] = ("分群結果與 VIP 定義", f"""
   <p style="margin-top:14px">分群只用 F 與 M，所以畫在這兩個指標上，三群可以完全分開：</p>
   <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>實際範圍</th></tr></thead>
     <tbody>
-      <tr><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td class="num">2,775</td><td style="text-align:left;white-space:normal">購買 2～15 次</td></tr>
-      <tr><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td class="num">3,074</td><td style="text-align:left;white-space:normal">多數只買 1 次，總消費 588～13,664 巴西幣（另有 26 人買過 2 次但金額很高）</td></tr>
+      <tr><th><span class="dot" style="background:#2f5fd0"></span>忠誠客戶</th><td class="num">2,801</td><td style="text-align:left;white-space:normal">購買 2～15 次（有回購）</td></tr>
+      <tr><th><span class="dot" style="background:#d6453d"></span>VIP 客戶</th><td class="num">3,048</td><td style="text-align:left;white-space:normal">只買 1 次，總消費 588～13,664 巴西幣</td></tr>
       <tr><th><span class="dot" style="background:#9aa3ad"></span>一般客戶</th><td class="num">87,508</td><td style="text-align:left;white-space:normal">只買 1 次，總消費 588 巴西幣以下</td></tr>
     </tbody></table></div>
-  <p>一般客戶與 VIP 客戶的分界約為 <span class="hl">588 巴西幣</span>（圖中虛線）。這條線是 K-Means 依資料自己找出來的，不是事先設定。</p>
+  <p>一般客戶與 VIP 客戶的分界約為 <span class="hl">588 巴西幣</span>（圖中虛線），也就是 K-Means 一般客戶群中心（平均 130 巴西幣）與 VIP 群中心（套用回購規則前，平均 1,045 巴西幣）的正中間。這條線是 K-Means 依資料找出來的，不是事先設定。</p>
 </div>
 <div class="card">
   <h2>PCA（主成分分析）特徵對比</h2>
@@ -415,24 +416,24 @@ PAGES["method_cluster.html"] = ("分群結果與 VIP 定義", f"""
 </div>
 <div class="card">
   <h2>VIP 客戶定義</h2>
-  <p>本研究的 VIP 客戶是指<span class="hl">累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
+  <p>本研究的 VIP 客戶是指<span class="hl">只買過 1 次、但累積消費金額高</span>的顧客，不是買很多次的顧客。</p>
   <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>內容</th></tr></thead>
     <tbody>
-      <tr><th>定義</th><td style="text-align:left;white-space:normal">累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
-      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">扣除 Frequency 最高的忠誠客戶後，Monetary 平均較高的一群</td></tr>
+      <tr><th>定義</th><td style="text-align:left;white-space:normal">只買過 1 次、但累積消費金額高的顧客（不是買很多次的顧客）</td></tr>
+      <tr><th>判定方式</th><td style="text-align:left;white-space:normal">只買 1 次的顧客中，消費金額在 K-Means 分界以上者；買 2 次以上一律為忠誠客戶</td></tr>
       <tr><th>金額門檻</th><td style="text-align:left;white-space:normal">總消費約 588 巴西幣以上（587.73～13,664.08），由 K-Means 依資料找出</td></tr>
-      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">3,048 人只買 1 次；26 人買 2 次（金額皆 ≥ 1,432）</td></tr>
-      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,074 人（3.29%）</td></tr>
-      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,045.14 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
+      <tr><th>購買次數</th><td style="text-align:left;white-space:normal">全部只買 1 次</td></tr>
+      <tr><th>人數</th><td style="text-align:left;white-space:normal">3,048 人（3.26%）</td></tr>
+      <tr><th>平均消費</th><td style="text-align:left;white-space:normal">1,036.37 巴西幣，為全體平均 165.20 的 6.3 倍</td></tr>
     </tbody></table></div>
-  <p>VIP 客戶幾乎都是<span class="hl">單筆高額訂單</span>的顧客：金額是區分 VIP 與一般客戶的唯一依據。</p>
+  <p>VIP 客戶都是<span class="hl">只買過一次、消費金額高</span>的顧客：只買 1 次的顧客中，金額是區分 VIP 與一般客戶的唯一依據。</p>
 </div>
 <div class="card">
   <h2>本分群與日常生活認知不同</h2>
   <div class="tbl-wrap"><table><thead><tr><th>項目</th><th>日常生活認知</th><th>本研究分群</th></tr></thead>
     <tbody>
-      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只看消費金額，99% 只買過 1 次；12 個月每人 CLV 2.46，低於忠誠客戶 8.80</td></tr>
-      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上幾乎都屬之（2,801 人中 2,775 人），平均 2.11 次；平均消費 292.05，低於 VIP</td></tr>
+      <tr><th>VIP 客戶</th><td style="text-align:left;white-space:normal">常來又花很多，最有價值</td><td style="text-align:left;white-space:normal">只買過 1 次、消費金額高；12 個月每人 CLV 2.26，低於忠誠客戶 8.96</td></tr>
+      <tr><th>忠誠客戶</th><td style="text-align:left;white-space:normal">長期、經常回購</td><td style="text-align:left;white-space:normal">買 2 次以上即屬之，平均 2.11 次；平均消費 308.59，低於 VIP</td></tr>
       <tr><th>一般客戶</th><td style="text-align:left;white-space:normal">人數不多的普通顧客</td><td style="text-align:left;white-space:normal">占 93.73%，人數最多</td></tr>
       <tr><th>分群門檻</th><td style="text-align:left;white-space:normal">會員等級、事先訂定</td><td style="text-align:left;white-space:normal">K-Means 依資料找出（約 588），換資料就會改變</td></tr>
       <tr><th>最近是否購買</th><td style="text-align:left;white-space:normal">通常會考慮</td><td style="text-align:left;white-space:normal">分群不使用 Recency</td></tr>
@@ -470,24 +471,24 @@ PAGES["results.html"] = ("分析結果", f"""
   <h2>客戶價值人數與百分比</h2>
   <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>百分比</th><th>平均 F（次）</th><th>平均 M（巴西幣）</th></tr></thead>
     <tbody>
-      <tr><th>忠誠客戶</th><td class="num">2,775</td><td class="num">2.97%</td><td class="num">2.11</td><td class="num">292</td></tr>
-      <tr><th>VIP 客戶</th><td class="num">3,074</td><td class="num">3.29%</td><td class="num">1.01</td><td class="num">1,045</td></tr>
+      <tr><th>忠誠客戶</th><td class="num">2,801</td><td class="num">3.00%</td><td class="num">2.11</td><td class="num">309</td></tr>
+      <tr><th>VIP 客戶</th><td class="num">3,048</td><td class="num">3.26%</td><td class="num">1.00</td><td class="num">1,036</td></tr>
       <tr><th>一般客戶</th><td class="num">87,508</td><td class="num">93.73%</td><td class="num">1.00</td><td class="num">130</td></tr>
       <tr class="total"><th>全部顧客</th><td class="num">93,357</td><td class="num">100%</td><td></td><td></td></tr>
     </tbody></table></div>
-  <p>K-Means 結果顯示，一般客戶占總客群約 <span class="hl">93.73%</span>，顯示大多數顧客消費次數與金額都不高；而 VIP 客戶與忠誠客戶合計僅占 <span class="hl">6.27%</span>。VIP 客戶平均消費約 1,045 巴西幣，但<span class="warn">平均只買過 1.01 次</span>。</p>
+  <p>K-Means 結果顯示，一般客戶占總客群約 <span class="hl">93.73%</span>，顯示大多數顧客消費次數與金額都不高；而 VIP 客戶與忠誠客戶合計僅占 <span class="hl">6.27%</span>。VIP 客戶平均消費約 1,036 巴西幣，但<span class="warn">都只買過 1 次</span>。</p>
 </div>
 <div class="card">
   <h2>未來 CLV 預測結果</h2>
   <p class="note">總 CLV = BG/NBD 預期購買次數 × Gamma-Gamma 預期客單價（單位：巴西幣）</p>
   <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數</th><th>3 個月</th><th>6 個月</th><th>9 個月</th><th>12 個月</th></tr></thead>
     <tbody>
-      <tr><th>忠誠客戶</th><td class="num">2,775</td><td class="num">8,917</td><td class="num">15,353</td><td class="num">20,364</td><td class="num">24,433</td></tr>
-      <tr><th>VIP 客戶</th><td class="num">3,074</td><td class="num">2,647</td><td class="num">4,619</td><td class="num">6,214</td><td class="num">7,561</td></tr>
+      <tr><th>忠誠客戶</th><td class="num">2,801</td><td class="num">9,170</td><td class="num">15,780</td><td class="num">20,920</td><td class="num">25,091</td></tr>
+      <tr><th>VIP 客戶</th><td class="num">3,048</td><td class="num">2,394</td><td class="num">4,193</td><td class="num">5,658</td><td class="num">6,902</td></tr>
       <tr><th>一般客戶</th><td class="num">87,508</td><td class="num">70,264</td><td class="num">122,780</td><td class="num">165,422</td><td class="num">201,557</td></tr>
       <tr class="total"><th>全部顧客</th><td class="num">93,357</td><td class="num">81,828</td><td class="num">142,752</td><td class="num">192,000</td><td class="num">233,551</td></tr>
     </tbody></table></div>
-  <p>忠誠客戶人數只占約 3%，12 個月總 CLV 卻有 24,433；<span class="hl">每人約 8.80，是 VIP（每人約 2.46）的 3.6 倍</span>。</p>
+  <p>忠誠客戶人數只占約 3%，12 個月總 CLV 卻有 25,091；<span class="hl">每人約 8.96，是 VIP（每人約 2.26）的 4.0 倍</span>。</p>
 </div>
 <div class="card">
   <h2>顧客未來 CLV 分客群</h2>
@@ -495,11 +496,11 @@ PAGES["results.html"] = ("分析結果", f"""
     <figure><img src="img/clv_share.png" alt="各客群人數占比與 12 個月總 CLV 占比長條圖"><figcaption>各客群「人數占比」與「未來 12 個月總 CLV 占比」比較。</figcaption></figure>
     <div class="tbl-wrap"><table><thead><tr><th>客群</th><th>人數占比</th><th>CLV 占比</th><th>每人 12 個月 CLV</th></tr></thead>
       <tbody>
-        <tr><th>忠誠客戶</th><td class="num">3.0%</td><td class="num"><span class="hl">10.5%</span></td><td class="num">8.80</td></tr>
-        <tr><th>VIP 客戶</th><td class="num">3.3%</td><td class="num"><span class="warn">3.2%</span></td><td class="num">2.46</td></tr>
+        <tr><th>忠誠客戶</th><td class="num">3.0%</td><td class="num"><span class="hl">10.7%</span></td><td class="num">8.96</td></tr>
+        <tr><th>VIP 客戶</th><td class="num">3.3%</td><td class="num"><span class="warn">3.0%</span></td><td class="num">2.26</td></tr>
         <tr><th>一般客戶</th><td class="num">93.7%</td><td class="num">86.3%</td><td class="num">2.30</td></tr>
       </tbody></table>
-      <p style="margin-top:14px"><b>忠誠客戶</b>的 CLV 占比是人數比例的 3 倍多。<b>VIP 客戶</b>過去花很多，但未來貢獻和人數比例差不多。<b>一般客戶</b>人數最多，是未來 CLV 的主要來源。</p>
+      <p style="margin-top:14px"><b>忠誠客戶</b>的 CLV 占比是人數比例的 3 倍多。<b>VIP 客戶</b>過去花很多，但未來貢獻和人數比例差不多，每人 CLV 甚至略低於一般客戶。<b>一般客戶</b>人數最多，是未來 CLV 的主要來源。</p>
     </div>
   </div>
 </div>
@@ -511,7 +512,7 @@ PAGES["conclusion.html"] = ("結論與討論", f"""
 <div class="card">
   <h2>結論</h2>
   <p class="indent">本研究以 Olist 電商資料集為基礎，透過資料前處理建立 RFM 指標，並以 Frequency 與 Monetary 運用 K-Means 將顧客分為<span class="hl">忠誠客戶</span>、<span class="hl">VIP 客戶</span>及<span class="hl">一般客戶</span>三類客群。分析結果顯示，VIP 與忠誠客戶合計僅占總客群約 6.27%。</p>
-  <p class="indent">此外，VIP 客戶平均只購買 1.01 次，<span class="hl">若單純用過去的消費金額推估，會高估其未來價值</span>。以 BG/NBD 與 Gamma-Gamma 預測後，VIP 每人未來 12 個月 CLV 約 2.46，<span class="hl">忠誠客戶約 8.80，是 VIP 的 3.6 倍</span>，是企業最值得優先經營的客群。</p>
+  <p class="indent">此外，VIP 客戶都只購買過 1 次，<span class="hl">若單純用過去的消費金額推估，會高估其未來價值</span>。以 BG/NBD 與 Gamma-Gamma 預測後，VIP 每人未來 12 個月 CLV 約 2.26，略低於一般客戶的 2.30；<span class="hl">忠誠客戶約 8.96，是 VIP 的 4.0 倍</span>，是企業最值得優先經營的客群。</p>
 </div>
 <div class="card">
   <h2>討論</h2>
@@ -521,6 +522,8 @@ PAGES["conclusion.html"] = ("結論與討論", f"""
   <p>九成以上的顧客只有一筆訂單，模型能用來判斷顧客是否還會回來的資訊很少。這是 Olist 資料本身的特性，也是預測結果需要保守看待的原因。</p>
   <h3>三、尚未用實際資料驗證預測</h3>
   <p>本研究的 CLV 是預測值，尚未把資料切成前後兩段、以後段實際消費檢驗預測準確度。後續可加入這一步，確認模型的預測與實際結果是否接近。</p>
+  <h3>四、客群定義的適用範圍</h3>
+  <p>本研究規定買 2 次以上一律為忠誠客戶，適用於 Olist 這類多數顧客只買一次的資料。若回購顧客比例高，VIP 客戶會很少；成果展示的系統在回購顧客超過兩成時會提出提醒。</p>
 </div>
 {pager(("分析結果", "results.html"), ("成果展示", "demo.html"))}
 """)

@@ -138,7 +138,7 @@ footer{background:var(--navy);color:#c9d3db;text-align:center;font-size:.9rem;li
 <div class="card">
   <h2>摘要</h2>
   <p class="indent">本研究以巴西電商 Olist 公開資料集為基礎，將訂單、付款與顧客三張資料表清洗整併後，為 <span class="hl">93,357 位顧客</span>建立 RFM 指標（最近一次消費、消費次數、消費金額）。接著以 Frequency 與 Monetary 進行 K-Means 分群，將顧客分為<span class="hl">忠誠客戶、VIP 客戶與一般客戶</span>三群，並以 BG/NBD 預測顧客未來的購買次數、以 Gamma-Gamma 預測每次消費金額，兩者相乘得到未來 3、6、9、12 個月的 CLV。</p>
-  <p class="indent">結果顯示，VIP 客戶過去平均消費約 1,045 巴西幣，但平均只買過 1.01 次，未來 12 個月每人 CLV 約 2.46；忠誠客戶人數只占約 3%，每人 CLV 卻約 8.80，是 VIP 的 3.6 倍。<span class="hl">若只看過去的消費金額，會高估 VIP 的未來價值</span>。最後我們把整套流程做成 Streamlit 網頁系統，只要上傳符合格式的交易資料，就能重跑分群與 CLV 預測。</p>
+  <p class="indent">結果顯示，VIP 客戶過去平均消費約 1,036 巴西幣，但都只買過 1 次，未來 12 個月每人 CLV 約 2.26，略低於一般客戶的 2.30；忠誠客戶人數只占約 3%，每人 CLV 卻約 8.96，是 VIP 的 4.0 倍。<span class="hl">若只看過去的消費金額，會高估 VIP 的未來價值</span>。最後我們把整套流程做成 Streamlit 網頁系統，只要上傳符合格式的交易資料，就能重跑分群與 CLV 預測。</p>
 </div>
 
 <div class="card">
