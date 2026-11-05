@@ -571,15 +571,15 @@ PAGES["demo.html"] = ("成果展示", f"""
 # 參考文獻：格式依「資科系成果展－網頁製作 參考文獻格式」，與書面報告相同
 # __期刊名__ 會加底線；網址會轉成連結
 REFS = [
-    "Davidson-Pilon, C. (n.d.). Lifetimes documentation. 2026 年 11 月 4 日，取自：https://lifetimes.readthedocs.io/en/latest/",
-    "Fader, P.S. & Hardie, B.G.S. (2013). The gamma-gamma model of monetary value. 2026 年 11 月 4 日，取自：http://www.brucehardie.com/notes/025/gamma_gamma.pdf",
+    "Davidson-Pilon, C. (n.d.). Lifetimes documentation. 取自：https://lifetimes.readthedocs.io/en/latest/",
+    "Fader, P.S. & Hardie, B.G.S. (2013). The gamma-gamma model of monetary value. 取自：http://www.brucehardie.com/notes/025/gamma_gamma.pdf",
     "Fader, P.S. & Hardie, B.G.S. (2009). Probability models for customer-base analysis. __Journal of Interactive Marketing__, 23(1):61-69.",
     "Fader, P.S., Hardie, B.G.S. & Lee, K.L. (2005a). “Counting your customers” the easy way: An alternative to the Pareto/NBD model. __Marketing Science__, 24(2):275-284.",
     "Fader, P.S., Hardie, B.G.S. & Lee, K.L. (2005b). RFM and CLV: Using iso-value curves for customer base analysis. __Journal of Marketing Research__, 42(4):415-430.",
-    "Olist (n.d.-a). Brazilian e-commerce public dataset by Olist. Kaggle. 2026 年 11 月 4 日，取自：https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
-    "Olist (n.d.-b). Olist. 2026 年 11 月 4 日，取自：https://olist.com",
+    "Olist (n.d.-a). Brazilian e-commerce public dataset by Olist. Kaggle. 取自：https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "Olist (n.d.-b). Olist. 取自：https://olist.com",
     "Pedregosa, F. et al. (2011). Scikit-learn: Machine learning in Python. __Journal of Machine Learning Research__, 12:2825-2830.",
-    "Streamlit (n.d.). Streamlit documentation. 2026 年 11 月 4 日，取自：https://docs.streamlit.io/",
+    "Streamlit (n.d.). Streamlit documentation. 取自：https://docs.streamlit.io/",
 ]
 
 
